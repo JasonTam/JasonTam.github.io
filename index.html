@@ -1,15 +1,33 @@
 <!DOCTYPE HTML>
 <html>
 <body>
-    <style>
-    .dot {
-      width: 25px;
-      height: 25px;
-      background-color: black;
-      position: absolute;
-    }
-  </style>
-  <script>
+	<style>
+		.dot {
+			width: 25px;
+			height: 25px;
+			background-color: black;
+			position: absolute;
+			font: 15px Courier New;
+		}
+		input[type="text"] {
+			background: transparent;
+			border: none;
+			font: 15px Courier New;
+		}
+		#coords {
+			position:fixed;
+			bottom: 0;
+			font: 15px Courier New;
+		}
+	</style>
+	<div id="coords">
+	<form name="show">
+		L <input type="text" name="L" size="4"><br>
+		a <input type="text" name="a" size="4"><br>
+		b <input type="text" name="b" size="4"><br>
+	</form>
+	</div>
+	<script>
 	function fi(t) {
 		if (t > 6/29) {
 			return Math.pow(t, 3);
@@ -43,6 +61,14 @@
 		r_hex = Math.round((255*r)).toString(16);
 		g_hex = Math.round((255*g)).toString(16);
 		b_hex = Math.round((255*b)).toString(16);
+		
+		var pad = function(x) {
+			return (x.length==1) ? "0"+x : x;
+		};
+		r_hex = pad(r_hex);
+		g_hex = pad(g_hex);
+		b_hex = pad(b_hex);
+		
 		hex = "#" + r_hex + g_hex + b_hex;
 		return hex
 	}
@@ -55,7 +81,7 @@
 			var L, a, b;
 			var X, Y, Z;
 			var R, G, B;
-			L = 100;
+			L = 100.0;
 			a = Math.round(
 				(255*event.pageX/window.innerWidth))-128;
 			b = Math.round(
@@ -72,6 +98,10 @@
 			dot.style.left = event.pageX + "px";
 			dot.style.top = event.pageY + "px";
 			//document.body.appendChild(dot);
+
+			document.show.L.value = L;
+			document.show.a.value = a;
+			document.show.b.value = b;
 		}
 	}
   
